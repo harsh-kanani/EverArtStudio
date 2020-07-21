@@ -37,6 +37,7 @@ class ViewOrder : AppCompatActivity() {
                 return true
             }
             R.id.menuViewProduct->{
+                startActivity(Intent(this@ViewOrder,View_Product::class.java))
                 return true
             }
             R.id.menuQuery->{
