@@ -30,12 +30,14 @@ class View_Product : AppCompatActivity() {
                 // whenever data at this location is updated.
 
                 arlst.clear()
-                for(p in dataSnapshot.children){
-                    var value =p.getValue(AddProductDataClass::class.java)
-                    if(value != null){
+                for(p in dataSnapshot.children) {
+                    var value = p.getValue(AddProductDataClass::class.java)
+                    if (value != null) {
                         arlst.add(value)
 
                     }
+                }
+                    diaplay.clear()
                     diaplay.addAll(arlst)
                     var ad=ViewProductMainClass(this@View_Product,diaplay)
                     rcv_view_product.adapter=ad
@@ -66,7 +68,7 @@ class View_Product : AppCompatActivity() {
 
                     })
 
-                }
+
                 //Log.d(FragmentActivity.TAG, "Value is: $value")
             }
 
