@@ -56,10 +56,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="78dp"
         android:layout_marginEnd="17dp"
-        android:layout_marginRight="17dp"
         android:text="New ? Registration"
         android:textColor="#F44336"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtpassword" />
+
+    <TextView
+        android:id="@+id/lblforgot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Forgot Password"
+        android:textColor="#F44336"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/lblrg"
+        app:layout_constraintTop_toBottomOf="@+id/lblrg" />
 </androidx.constraintlayout.widget.ConstraintLayout>

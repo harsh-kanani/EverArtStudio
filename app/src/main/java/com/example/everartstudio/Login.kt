@@ -20,6 +20,11 @@ class Login : AppCompatActivity() {
         lblrg.setOnClickListener {
             startActivity(Intent(this@Login,Registration::class.java))
         }
+
+        lblforgot.setOnClickListener {
+            startActivity(Intent(this@Login,Forgot_Password::class.java))
+        }
+
         btnlogin.setOnClickListener {
             if (txtemail.text.toString().equals("admin@gmail.com") && txtpassword.text.toString().equals("admin123")){
                 startActivity(Intent(this@Login,ViewOrder::class.java))
