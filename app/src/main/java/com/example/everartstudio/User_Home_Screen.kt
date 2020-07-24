@@ -72,15 +72,22 @@ class User_Home_Screen : AppCompatActivity(),
         drawerLayout.addDrawerListener(toogle)
         toogle.syncState()
 
+        if(savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, Fragment_Category()).commit()
 
+        }
 
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
+            R.id.nav_home->
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, Fragment_Category()).commit()
+
             R.id.nav_profile->
-                //supportFragmentManager.beginTransaction().replace(R.id.fragment_container,profile()).commit()
-                Toast.makeText(this@User_Home_Screen,"Profile",Toast.LENGTH_LONG).show()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,Fragment_Profile()).commit()
+
 
         }
         drawerLayout.closeDrawer(GravityCompat.START)
