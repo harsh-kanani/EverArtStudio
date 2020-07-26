@@ -1,10 +1,12 @@
 package com.example.everartstudio
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +37,14 @@ class Fragment_View_Product_Details : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment__view__product__details, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        var sp = context!!.getSharedPreferences("ViewDetail",Activity.MODE_PRIVATE)
+        var product = sp.getString("product","null")
+        Toast.makeText(context,product.toString(),Toast.LENGTH_LONG).show()
     }
 
     companion object {

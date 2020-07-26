@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
@@ -43,14 +44,19 @@ class UserViewProductMainClass(var ctx:Context,var arlst:ArrayList<AddProductDat
             edt.putString("product",arlst[position].product)
             edt.apply()
             edt.commit()
+
+            val transaction =(ctx as AppCompatActivity).supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container,Fragment_View_Product_Details())
+            transaction.addToBackStack(null)
+            transaction.commit()
             /*
             var fragmentManager: FragmentManager = activity!!.supportFragmentManager
             var fragmentTransaction: FragmentTransaction =  fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.fragment_container,Fragment_Product())
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
+            */
 
-             */
         }
 
 
