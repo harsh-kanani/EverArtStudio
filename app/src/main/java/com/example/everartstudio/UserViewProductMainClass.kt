@@ -49,6 +49,7 @@ class UserViewProductMainClass(var ctx:Context,var arlst:ArrayList<AddProductDat
             transaction.replace(R.id.fragment_container,Fragment_View_Product_Details())
             transaction.addToBackStack(null)
             transaction.commit()
+
             /*
             var fragmentManager: FragmentManager = activity!!.supportFragmentManager
             var fragmentTransaction: FragmentTransaction =  fragmentManager.beginTransaction()

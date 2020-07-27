@@ -1,12 +1,23 @@
 package com.example.everartstudio
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.fragment__view__product__details.*
+import kotlinx.android.synthetic.main.view_product_custom_user.*
+import kotlinx.android.synthetic.main.view_product_custom_user.txtProductName
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,7 +55,35 @@ class Fragment_View_Product_Details : Fragment() {
 
         var sp = context!!.getSharedPreferences("ViewDetail",Activity.MODE_PRIVATE)
         var product = sp.getString("product","null")
-        Toast.makeText(context,product.toString(),Toast.LENGTH_LONG).show()
+        //Toast.makeText(context,product.toString(),Toast.LENGTH_LONG).show()
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("Product").child(product.toString())
+
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                txtProductName.text = dataSnapshot.child("product").value.toString()
+                txtProductPrice2.text = dataSnapshot.child("price").value.toString()
+
+                val storage = FirebaseStorage.getInstance()
+                val storageReference = storage.getReferenceFromUrl(dataSnapshot.child("img").value.toString())
+                storageReference.downloadUrl.addOnSuccessListener {
+                    val imgurl = it.toString()
+                    Glide.with(activity!!).load(imgurl).into(imgProductView).view
+                }
+                txtProductDescription.text = dataSnapshot.child("detail").value.toString()
+                txtPrType.text = dataSnapshot.child("category").value.toString()
+
+
+                //Log.d("check", dataSnapshot.child("product").value.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                //Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
+
     }
 
     companion object {
