@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
@@ -18,6 +19,7 @@ class CartMainClass(var ctx:Context , var arlst:ArrayList<CartDataClass>,var uid
         var detail = v.lblProductDes
         var type = v.lblProductCategory
         var img = v.imageViewProduct
+        var btn = v.btnCartDel
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,6 +43,18 @@ class CartMainClass(var ctx:Context , var arlst:ArrayList<CartDataClass>,var uid
         storageReference.downloadUrl.addOnSuccessListener {
             val imgurl = it.toString()
             Glide.with(ctx).load(imgurl).into(holder.img).view
+        }
+
+        holder.btn.setOnClickListener {
+            val database = FirebaseDatabase.getInstance()
+            val myRef = database.getReference("Cart").child(uid)
+            myRef.child(arlst[position].product.toString()).removeValue().addOnSuccessListener {
+                Toast.makeText(ctx,"Successfully Delted...",Toast.LENGTH_LONG).show()
+
+            }.addOnFailureListener {
+                Toast.makeText(ctx,"Something Problem...",Toast.LENGTH_LONG).show()
+            }
+
         }
     }
 }

@@ -72,7 +72,7 @@ class Fragment_View_Product_Details : Fragment() {
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("Product").child(product.toString())
 
-        myRef.addValueEventListener(object : ValueEventListener {
+        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
 

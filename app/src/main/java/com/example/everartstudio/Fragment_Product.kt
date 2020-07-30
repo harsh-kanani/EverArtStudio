@@ -59,7 +59,7 @@ class Fragment_Product : Fragment() {
             var arlst:ArrayList<AddProductDataClass> = arrayListOf<AddProductDataClass>()
             var display:ArrayList<AddProductDataClass> = arrayListOf<AddProductDataClass>()
 
-            myRef.addValueEventListener(object : ValueEventListener {
+            myRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                     arlst.clear()

@@ -58,6 +58,7 @@ class Fragment_Cart : Fragment() {
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("Cart").child(user.toString())
         var arlst:ArrayList<CartDataClass> = arrayListOf()
+        var t = 0
         myRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 arlst.clear()
@@ -65,8 +66,15 @@ class Fragment_Cart : Fragment() {
                     var value =i.getValue(CartDataClass::class.java)!!
                     if (value != null){
                         arlst.add(value)
+
                     }
+                    t+=i.child("price").value.toString().toInt()
                 }
+
+                    lblTotal.text = t.toString()
+                    lblGtotal.text= t.toString()
+
+
                 var adapter = CartMainClass(context!!,arlst,user.toString())
                 rcvCart.adapter = adapter
                 rcvCart.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
