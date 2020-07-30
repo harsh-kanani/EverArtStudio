@@ -17,7 +17,28 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" />
+            android:background="?attr/colorPrimary">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="EVER ART STUDIO"
+                android:textColor="#FFFFFF" />
+
+            <ImageButton
+                android:id="@+id/menuCartBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="7dp"
+                android:src="@drawable/ic_cart"
+                android:background="@color/colorPrimary"
+                />
+
+
+        </androidx.appcompat.widget.Toolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
     <FrameLayout
         android:id="@+id/fragment_container"

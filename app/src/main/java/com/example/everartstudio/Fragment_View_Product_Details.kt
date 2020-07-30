@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
@@ -14,6 +15,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_user__home__screen.*
 import kotlinx.android.synthetic.main.fragment__view__product__details.*
 import kotlinx.android.synthetic.main.view_product_custom_user.*
 import kotlinx.android.synthetic.main.view_product_custom_user.txtProductName
@@ -53,14 +55,26 @@ class Fragment_View_Product_Details : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        var sp2=context!!.getSharedPreferences("MySp",Activity.MODE_PRIVATE)
+        var user = sp2.getString("uid","null")
+
         var sp = context!!.getSharedPreferences("ViewDetail",Activity.MODE_PRIVATE)
         var product = sp.getString("product","null")
         //Toast.makeText(context,product.toString(),Toast.LENGTH_LONG).show()
+
+        /*ratingBar2.setOnRatingBarChangeListener(){
+            ratingBar, rating, fromUser ->
+
+            Toast.makeText(context,rating.toString(),Toast.LENGTH_LONG).show()
+        }
+
+         */
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("Product").child(product.toString())
 
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+
 
                 txtProductName.text = dataSnapshot.child("product").value.toString()
                 txtProductPrice2.text = dataSnapshot.child("price").value.toString()
@@ -73,9 +87,13 @@ class Fragment_View_Product_Details : Fragment() {
                 }
                 txtProductDescription.text = dataSnapshot.child("detail").value.toString()
                 txtPrType.text = dataSnapshot.child("category").value.toString()
+                var sp3 = context!!.getSharedPreferences("img",Activity.MODE_PRIVATE)
+                var edt = sp3.edit()
+                edt.putString("url",dataSnapshot.child("img").value.toString())
+                edt.apply()
+                edt.commit()
 
 
-                //Log.d("check", dataSnapshot.child("product").value.toString())
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -83,6 +101,18 @@ class Fragment_View_Product_Details : Fragment() {
                 //Log.w(TAG, "Failed to read value.", error.toException())
             }
         })
+
+        btnCart.setOnClickListener {
+            var sp4 = context!!.getSharedPreferences("img",Activity.MODE_PRIVATE)
+            var url = sp4.getString("url",null)
+            var myRef2 = database.getReference("Cart")
+            var cart = CartDataClass(txtProductName.text.toString(),txtProductPrice2.text.toString().toInt(),txtProductDescription.text.toString(),txtPrType.text.toString(),url.toString())
+            myRef2.child(user.toString()).child(txtProductName.text.toString()).setValue(cart).addOnSuccessListener {
+                Toast.makeText(context,"Product Added In Cart...",Toast.LENGTH_LONG).show()
+            }.addOnFailureListener {
+                Toast.makeText(context,"Something Wrong...",Toast.LENGTH_LONG).show()
+            }
+        }
 
     }
 

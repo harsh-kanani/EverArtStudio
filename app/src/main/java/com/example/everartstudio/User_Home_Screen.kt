@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -77,6 +79,16 @@ class User_Home_Screen : AppCompatActivity(),
                 .replace(R.id.fragment_container, Fragment_Category()).commit()
 
         }
+        menuCartBtn.setOnClickListener {
+            //supportFragmentManager.beginTransaction()
+            //    .replace(R.id.fragment_container, Fragment_Cart()).commit()
+            var fragmentManager: FragmentManager = this@User_Home_Screen.supportFragmentManager
+            var fragmentTransaction: FragmentTransaction =  fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_container,Fragment_Cart())
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
 
     }
 
