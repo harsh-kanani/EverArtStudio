@@ -59,9 +59,10 @@ class Fragment_Cart : Fragment() {
         val myRef = database.getReference("Cart").child(user.toString())
         var arlst:ArrayList<CartDataClass> = arrayListOf()
         var t = 0
-        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 arlst.clear()
+                t=0
                 for(i in dataSnapshot.children){
                     var value =i.getValue(CartDataClass::class.java)!!
                     if (value != null){
