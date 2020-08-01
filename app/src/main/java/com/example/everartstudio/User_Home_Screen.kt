@@ -99,7 +99,8 @@ class User_Home_Screen : AppCompatActivity(),
 
             R.id.nav_profile->
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container,Fragment_Profile()).commit()
-
+            R.id.nav_myorder->
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,Fragment_MyOrder()).commit()
 
         }
         drawerLayout.closeDrawer(GravityCompat.START)

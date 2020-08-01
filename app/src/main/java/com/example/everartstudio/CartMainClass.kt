@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
@@ -38,18 +41,24 @@ class CartMainClass(var ctx:Context , var arlst:ArrayList<CartDataClass>,var uid
         holder.prc.text = "Rs."+arlst[position].price.toString()
         holder.detail.text = arlst[position].detail
         holder.type.text = arlst[position].category
-        val storage = FirebaseStorage.getInstance()
-        val storageReference = storage.getReferenceFromUrl(arlst[position].img)
-        storageReference.downloadUrl.addOnSuccessListener {
-            val imgurl = it.toString()
-            Glide.with(ctx).load(imgurl).into(holder.img).view
+        if(arlst[position].img != "") {
+            val storage = FirebaseStorage.getInstance()
+            val storageReference = storage.getReferenceFromUrl(arlst[position].img)
+            storageReference.downloadUrl.addOnSuccessListener {
+                val imgurl = it.toString()
+                Glide.with(ctx).load(imgurl).into(holder.img).view
+            }
         }
-
         holder.btn.setOnClickListener {
             val database = FirebaseDatabase.getInstance()
             val myRef = database.getReference("Cart").child(uid)
             myRef.child(arlst[position].product.toString()).removeValue().addOnSuccessListener {
                 Toast.makeText(ctx,"Successfully Delted...",Toast.LENGTH_LONG).show()
+
+                val transaction =(ctx as AppCompatActivity).supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragment_container,Fragment_Cart())
+                transaction.addToBackStack(null)
+                transaction.commit()
 
             }.addOnFailureListener {
                 Toast.makeText(ctx,"Something Problem...",Toast.LENGTH_LONG).show()

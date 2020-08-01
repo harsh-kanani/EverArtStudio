@@ -6,18 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.fragment__cart.*
+import kotlinx.android.synthetic.main.fragment__my_order.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,10 +23,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Fragment_Cart.newInstance] factory method to
+ * Use the [Fragment_MyOrder.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Fragment_Cart : Fragment() {
+class Fragment_MyOrder : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -48,73 +44,41 @@ class Fragment_Cart : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__cart, container, false)
+        return inflater.inflate(R.layout.fragment__my_order, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
         var sp = context!!.getSharedPreferences("MySp",Activity.MODE_PRIVATE)
         var user = sp.getString("uid","null")
+
         val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("Cart").child(user.toString())
-        var arlst:ArrayList<CartDataClass> = arrayListOf()
-        var t = 0
-        var c=0
+        val myRef = database.getReference("Myorder").child(user.toString())
+
+        var arlst:ArrayList<MyOrder> = arrayListOf()
+
         myRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 arlst.clear()
-                t = 0
-
-                for (i in dataSnapshot.children) {
-                            var value = i.getValue(CartDataClass::class.java)!!
-                            if (value != null) {
-                                arlst.add(value)
-                                t+=value.price
-                            }
-                            /*
-                            c = 0
-                            if (i.child("price").value.toString() == "null") {
-                                c = 0
-
-                            } else {
-                                c += i.child("price").value.toString().toInt()
-                                t += c
-                            }
-                            */
-                        }
-
-                            lblTotal?.text = t.toString()
-                            lblGtotal?.text = t.toString()
-
-
-                        var adapter = CartMainClass(context!!, arlst, user.toString())
-                        rcvCart.adapter = adapter
-                        rcvCart.layoutManager =
-                            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
-
+                for (v1 in dataSnapshot.children){
+                    val value =v1.getValue(MyOrder::class.java)!!
+                    //Log.d("myorder", "Value is: $value")
+                    if(value != null){
+                        arlst.add(value)
                     }
+                }
+                arlst.reverse()
+                var adapter = MyOrderMainClass(context!!,arlst)
+                rcv_my_order.adapter=adapter
+                rcv_my_order.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+            }
 
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
                 //Log.w(TAG, "Failed to read value.", error.toException())
             }
         })
-        btnCheckout.setOnClickListener {
-            /*
-            var myRef1=database.getReference().child("check").push()
-            myRef1.child("hello").setValue("hi")
-
-             */
-            var fragmentManager: FragmentManager = activity!!.supportFragmentManager
-            var fragmentTransaction: FragmentTransaction =  fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fragment_container,Fragment_Address())
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
-        }
-
     }
 
     companion object {
@@ -124,12 +88,12 @@ class Fragment_Cart : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Fragment_Cart.
+         * @return A new instance of fragment Fragment_MyOrder.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Fragment_Cart().apply {
+            Fragment_MyOrder().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
