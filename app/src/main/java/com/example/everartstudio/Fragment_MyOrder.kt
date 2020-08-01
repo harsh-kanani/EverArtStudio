@@ -69,7 +69,7 @@ class Fragment_MyOrder : Fragment() {
                     }
                 }
                 arlst.reverse()
-                var adapter = MyOrderMainClass(context!!,arlst)
+                var adapter = MyOrderMainClass(context!!,arlst,user.toString())
                 rcv_my_order.adapter=adapter
                 rcv_my_order.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
             }

@@ -1,7 +1,6 @@
 package com.example.everartstudio
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,9 +14,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_user__home__screen.*
 import kotlinx.android.synthetic.main.fragment__view__product__details.*
-import kotlinx.android.synthetic.main.view_product_custom_user.*
 import kotlinx.android.synthetic.main.view_product_custom_user.txtProductName
 
 
@@ -69,6 +66,7 @@ class Fragment_View_Product_Details : Fragment() {
         }
 
          */
+
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("Product").child(product.toString())
 
@@ -102,6 +100,31 @@ class Fragment_View_Product_Details : Fragment() {
             }
         })
 
+        var myRef2 = database.getReference("Ratings").child(product.toString())
+        var c=0.0
+        var r=0.0
+        myRef2.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+               c=0.0
+                r=0.0
+                for (s1 in dataSnapshot.children){
+                    c+=1.0
+                    r+=s1.child("star").value.toString().toFloat()
+                }
+                if(r>0){
+                    var rs= r/c
+                    ratingBar2.rating = rs.toFloat()
+                }
+                //val value =
+                  //  dataSnapshot.getValue(String::class.java)!!
+                //Log.d(TAG, "Value is: $value")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                //Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
         btnCart.setOnClickListener {
             var sp4 = context!!.getSharedPreferences("img",Activity.MODE_PRIVATE)
             var url = sp4.getString("url",null)
