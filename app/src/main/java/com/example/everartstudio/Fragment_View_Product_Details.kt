@@ -75,7 +75,7 @@ class Fragment_View_Product_Details : Fragment() {
 
 
                 txtProductName.text = dataSnapshot.child("product").value.toString()
-                txtProductPrice2.text = dataSnapshot.child("price").value.toString()
+                txtProductPrice2.text = "Rs."+dataSnapshot.child("price").value.toString()
 
                 val storage = FirebaseStorage.getInstance()
                 val storageReference = storage.getReferenceFromUrl(dataSnapshot.child("img").value.toString())
