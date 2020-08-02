@@ -2,7 +2,6 @@ package com.example.everartstudio
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.like.LikeButton
+import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.fragment__view__product__details.*
 import kotlinx.android.synthetic.main.view_product_custom_user.txtProductName
 
@@ -69,36 +70,46 @@ class Fragment_View_Product_Details : Fragment() {
 
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("Product").child(product.toString())
+        var myRef3 = database.getReference("Wishlist")
+        fun product_value(v:Int){
+            myRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
 
+                    txtProductName.text = dataSnapshot.child("product").value.toString()
+                    txtProductPrice2.text = "Rs."+dataSnapshot.child("price").value.toString()
 
-                txtProductName.text = dataSnapshot.child("product").value.toString()
-                txtProductPrice2.text = "Rs."+dataSnapshot.child("price").value.toString()
+                    val storage = FirebaseStorage.getInstance()
+                    val storageReference = storage.getReferenceFromUrl(dataSnapshot.child("img").value.toString())
+                    storageReference.downloadUrl.addOnSuccessListener {
+                        val imgurl = it.toString()
+                        Glide.with(activity!!).load(imgurl).into(imgProductView).view
+                    }
+                    txtProductDescription.text = dataSnapshot.child("detail").value.toString()
+                    txtPrType.text = dataSnapshot.child("category").value.toString()
+                    var sp3 = context!!.getSharedPreferences("img",Activity.MODE_PRIVATE)
+                    var edt = sp3.edit()
+                    edt.putString("url",dataSnapshot.child("img").value.toString())
+                    edt.apply()
+                    edt.commit()
+                    if(v==1){
+                        var pro = AddProductDataClass(dataSnapshot.child("product").value.toString(),dataSnapshot.child("price").value.toString().toInt(),dataSnapshot.child("detail").value.toString(),dataSnapshot.child("category").value.toString(),dataSnapshot.child("img").value.toString())
+                        myRef3.child(user.toString()).child(product.toString()).setValue(pro).addOnSuccessListener {
+                            Toast.makeText(context,"Successfully Added In Whishlist !!",Toast.LENGTH_LONG)
+                        }.addOnFailureListener {
+                            Toast.makeText(context,"Something Wrong...",Toast.LENGTH_LONG)
+                        }
+                    }
 
-                val storage = FirebaseStorage.getInstance()
-                val storageReference = storage.getReferenceFromUrl(dataSnapshot.child("img").value.toString())
-                storageReference.downloadUrl.addOnSuccessListener {
-                    val imgurl = it.toString()
-                    Glide.with(activity!!).load(imgurl).into(imgProductView).view
                 }
-                txtProductDescription.text = dataSnapshot.child("detail").value.toString()
-                txtPrType.text = dataSnapshot.child("category").value.toString()
-                var sp3 = context!!.getSharedPreferences("img",Activity.MODE_PRIVATE)
-                var edt = sp3.edit()
-                edt.putString("url",dataSnapshot.child("img").value.toString())
-                edt.apply()
-                edt.commit()
 
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // Failed to read value
-                //Log.w(TAG, "Failed to read value.", error.toException())
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    // Failed to read value
+                    //Log.w(TAG, "Failed to read value.", error.toException())
+                }
+            })
+        }
+        product_value(0)
 
         var myRef2 = database.getReference("Ratings").child(product.toString())
         var c=0.0
@@ -136,6 +147,44 @@ class Fragment_View_Product_Details : Fragment() {
                 Toast.makeText(context,"Something Wrong...",Toast.LENGTH_LONG).show()
             }
         }
+        // Read from the database
+
+        // Read from the database
+        myRef3.child(user.toString()).child(product.toString()).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                //Toast.makeText(context,dataSnapshot.child("product").value.toString(),Toast.LENGTH_LONG).show()
+                if(dataSnapshot.child("product").value.toString() == product.toString()){
+                    heart_button.isLiked = true
+                }else{
+                    heart_button.isLiked = false
+                }
+                //val value =
+                  //  dataSnapshot.getValue(String::class.java)!!
+                //Log.d(TAG, "Value is: $value")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                //Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
+        heart_button.setOnLikeListener(object : OnLikeListener {
+            override fun liked(likeButton: LikeButton) {
+                product_value(1)
+                Toast.makeText(context,"Successfully Added In Wishlist !!",Toast.LENGTH_LONG).show()
+            }
+            override fun unLiked(likeButton: LikeButton) {
+                myRef3.child(user.toString()).child(product.toString()).removeValue().addOnSuccessListener {
+                    Toast.makeText(context,"Removed From Wishlist !!",Toast.LENGTH_LONG).show()
+                }.addOnFailureListener {
+                    Toast.makeText(context,"something Wrong !!",Toast.LENGTH_LONG).show()
+                }
+
+            }
+        })
+
+
+
 
     }
 

@@ -15,5 +15,11 @@
         android:title="My Order"
         android:icon="@drawable/ic_myorder"
         />
+    <item
+        android:id="@+id/nav_wishlist"
+        android:title="Wishlist"
+        android:icon="@drawable/ic_heart"
+        />
+
 
 </menu>

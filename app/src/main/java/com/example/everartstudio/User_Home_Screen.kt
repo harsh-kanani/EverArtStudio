@@ -101,7 +101,8 @@ class User_Home_Screen : AppCompatActivity(),
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container,Fragment_Profile()).commit()
             R.id.nav_myorder->
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container,Fragment_MyOrder()).commit()
-
+            R.id.nav_wishlist->
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,Fragment_Wishlist()).commit()
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
