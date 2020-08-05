@@ -9,6 +9,12 @@
         android:id="@+id/menuViewProduct"
         android:title="View Product" />
     <item
+        android:id="@+id/menuConformOrders"
+        android:title="Conform Orders" />
+    <item
+        android:id="@+id/menuCancelledOrders"
+        android:title="Cancelled Orders" />
+    <item
         android:id="@+id/menuQuery"
         android:title="Query" />
     <item

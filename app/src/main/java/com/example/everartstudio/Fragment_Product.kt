@@ -66,20 +66,27 @@ class Fragment_Product : Fragment() {
                     for(p in dataSnapshot.children) {
 
                         if(tp=="All"){
-                           var value = p.getValue(AddProductDataClass::class.java)
-                            if (value != null) {
-                                arlst.add(value)
-
-                            }
-
-                        }
-                        else{
-                            if(p.child("category").value == tp){
+                            if(p.child("status").value.toString()=="on"){
                                 var value = p.getValue(AddProductDataClass::class.java)
                                 if (value != null) {
                                     arlst.add(value)
 
                                 }
+                            }
+
+
+                        }
+                        else{
+
+                            if(p.child("category").value == tp){
+                                if(p.child("status").value.toString() == "on"){
+                                    var value = p.getValue(AddProductDataClass::class.java)
+                                    if (value != null) {
+                                        arlst.add(value)
+
+                                    }
+                                }
+
                             }
                         }
 

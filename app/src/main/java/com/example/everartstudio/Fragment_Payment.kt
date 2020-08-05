@@ -83,8 +83,10 @@ class Fragment_Payment : Fragment() {
                         var value2=dataSnapshot.child("Address").child(user.toString()).getValue(AddressDataClass::class.java)!!
                         Log.d("order","Address is $value2")
 
-                        var or = MyOrder(value.product,value.price,value.detail,value.category,value.img,value2.name,value2.mobile,value2.state,value2.city,value2.pincode,value2.address,p,cd.toString())
+
                         var myRef2 = database.getReference().child("Myorder").child(user.toString()).push()
+                        var or = MyOrder(value.product,value.price,value.detail,value.category,value.img,value2.name,value2.mobile,value2.state,value2.city,value2.pincode,value2.address,p,cd.toString(),user.toString(),"pending",myRef2.key.toString())
+                        //Toast.makeText(context,myRef2.key.toString(),Toast.LENGTH_LONG).show()
                         myRef2.setValue(or).addOnSuccessListener {
                             Toast.makeText(context,"Your Order Is Received !!", Toast.LENGTH_LONG).show()
                             var fragmentManager: FragmentManager = activity!!.supportFragmentManager

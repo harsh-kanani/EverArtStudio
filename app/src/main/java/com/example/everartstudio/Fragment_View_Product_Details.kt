@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
@@ -77,7 +78,7 @@ class Fragment_View_Product_Details : Fragment() {
 
 
                     txtProductName.text = dataSnapshot.child("product").value.toString()
-                    txtProductPrice2.text = "Rs."+dataSnapshot.child("price").value.toString()
+                    txtProductPrice2.text = dataSnapshot.child("price").value.toString()
 
                     val storage = FirebaseStorage.getInstance()
                     val storageReference = storage.getReferenceFromUrl(dataSnapshot.child("img").value.toString())
@@ -87,13 +88,17 @@ class Fragment_View_Product_Details : Fragment() {
                     }
                     txtProductDescription.text = dataSnapshot.child("detail").value.toString()
                     txtPrType.text = dataSnapshot.child("category").value.toString()
+                    if(dataSnapshot.child("status").value.toString() == "off"){
+                        btnCart.isEnabled =false
+                        Toast.makeText(context,"This product is out of stock",Toast.LENGTH_LONG).show()
+                    }
                     var sp3 = context!!.getSharedPreferences("img",Activity.MODE_PRIVATE)
                     var edt = sp3.edit()
                     edt.putString("url",dataSnapshot.child("img").value.toString())
                     edt.apply()
                     edt.commit()
                     if(v==1){
-                        var pro = AddProductDataClass(dataSnapshot.child("product").value.toString(),dataSnapshot.child("price").value.toString().toInt(),dataSnapshot.child("detail").value.toString(),dataSnapshot.child("category").value.toString(),dataSnapshot.child("img").value.toString())
+                        var pro = AddProductDataClass(dataSnapshot.child("product").value.toString(),dataSnapshot.child("price").value.toString().toInt(),dataSnapshot.child("detail").value.toString(),dataSnapshot.child("category").value.toString(),dataSnapshot.child("img").value.toString(),"on")
                         myRef3.child(user.toString()).child(product.toString()).setValue(pro).addOnSuccessListener {
                             Toast.makeText(context,"Successfully Added In Whishlist !!",Toast.LENGTH_LONG)
                         }.addOnFailureListener {
@@ -136,6 +141,9 @@ class Fragment_View_Product_Details : Fragment() {
                 //Log.w(TAG, "Failed to read value.", error.toException())
             }
         })
+
+
+
         btnCart.setOnClickListener {
             var sp4 = context!!.getSharedPreferences("img",Activity.MODE_PRIVATE)
             var url = sp4.getString("url",null)

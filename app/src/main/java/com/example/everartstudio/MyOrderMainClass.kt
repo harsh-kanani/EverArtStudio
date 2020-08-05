@@ -1,10 +1,12 @@
 package com.example.everartstudio
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
@@ -42,6 +44,15 @@ class MyOrderMainClass(var ctx:Context,var arlst:ArrayList<MyOrder>,var user:Str
         holder.dt.text =arlst[position].date
         holder.layout.setOnClickListener {
             Toast.makeText(ctx,arlst[position].product,Toast.LENGTH_LONG).show()
+            var sp = ctx.getSharedPreferences("Order",Activity.MODE_PRIVATE)
+            var edt =sp.edit()
+            edt.putString("oid",arlst[position].oid)
+            edt.commit()
+            edt.apply()
+            val transaction =(ctx as AppCompatActivity).supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container,Fragment_MyOrder_View_Deatils())
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
         val storage = FirebaseStorage.getInstance()
         val storageReference = storage.getReferenceFromUrl(arlst[position].img)

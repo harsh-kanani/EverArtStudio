@@ -10,7 +10,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.view_product_custom.view.*
 
@@ -22,6 +25,7 @@ class ViewProductMainClass(var ctx:Activity,var arlst:ArrayList<AddProductDataCl
         var prc = v.prod_price
         var del = v.btn_del
         var edt = v.btn_edit
+        var sw = v.sw
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -76,7 +80,48 @@ class ViewProductMainClass(var ctx:Activity,var arlst:ArrayList<AddProductDataCl
             }
             dialog.show()
         }
+        if(arlst[position].status.toString() == "on"){
+            holder.sw.isChecked = true
+        }else{
+            holder.sw.isChecked = false
+        }
+        holder.sw.setOnCheckedChangeListener { buttonView, isChecked ->
+            var msg = ""
+            if (holder.sw.isChecked){
+                msg = "on"
+            }else{
+                msg = "off"
+            }
+            myRef.child(arlst[position].product).child("status").setValue(msg).addOnSuccessListener {
+                Toast.makeText(ctx,arlst[position].product+" is $msg",Toast.LENGTH_LONG).show()
+            }.addOnFailureListener {
+                Toast.makeText(ctx,"Something Wrong !!",Toast.LENGTH_LONG).show()
+            }
 
+        }/*
+        var myRef2 = database.getReference("Wishlist")
+
+        myRef2.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                for (v1 in dataSnapshot.children){
+                    for(v2 in v1.children){
+                        if(v2.child("product").value.toString() == arlst[position].product){
+                            v2.child("status").
+                        }
+                    }
+                }
+                val value =
+                    dataSnapshot.getValue(String::class.java)!!
+                //Log.d(TAG, "Value is: $value")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                //Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
+        */
 
 
     }

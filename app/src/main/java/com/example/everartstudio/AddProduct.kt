@@ -101,7 +101,7 @@ class AddProduct : AppCompatActivity() {
 
                         val database = FirebaseDatabase.getInstance()
                         val myRef = database.getReference("Product")
-                        var adprd=AddProductDataClass(txtpnm.text.toString(),txtprice.text.toString().toInt(),txtdetail.text.toString(),spcategory.selectedItem.toString(),imgdata.toString())
+                        var adprd=AddProductDataClass(txtpnm.text.toString(),txtprice.text.toString().toInt(),txtdetail.text.toString(),spcategory.selectedItem.toString(),imgdata.toString(),"on")
                         myRef.child(txtpnm.text.toString()).setValue(adprd)
                         Toast.makeText(this@AddProduct,"Successfully Add",Toast.LENGTH_LONG).show()
 

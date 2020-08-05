@@ -66,11 +66,12 @@ class Fragment_Wishlist : Fragment() {
                 // whenever data at this location is updated.
                 arlst.clear()
                 for(i in dataSnapshot.children){
-
-                        val value = i.getValue(AddProductDataClass::class.java)!!
-                        if (value != null) {
-                            arlst.add(value)
-                            //Log.d("wishlist", "Value is: $value")
+                        if(i.child("status").value.toString() == "on"){
+                            val value = i.getValue(AddProductDataClass::class.java)!!
+                            if (value != null) {
+                                arlst.add(value)
+                                //Log.d("wishlist", "Value is: $value")
+                            }
                         }
 
                 }
