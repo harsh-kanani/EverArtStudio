@@ -11,9 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".User_Home_Screen" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-
-        </activity>
+        <activity android:name=".Cancelled_Order"></activity>
+        <activity android:name=".Conform_Orders" />
+        <activity
+            android:name=".User_Home_Screen"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".Forgot_Password" />
         <activity android:name=".product_view" />
         <activity android:name=".View_Product" />

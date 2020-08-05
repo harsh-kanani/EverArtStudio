@@ -34,7 +34,7 @@ class ViewOrder : AppCompatActivity() {
                 for (v1 in dataSnapshot.children){
                     for (v2 in v1.children){
                         t+=1
-                        if (v2.child("status").value.toString() == "Cancelled"){
+                        if (v2.child("status").value.toString() == "cancelled"){
                             c+=1
                         }
                         if (v2.child("status").value.toString() == "pending"){
@@ -78,6 +78,14 @@ class ViewOrder : AppCompatActivity() {
             }
             R.id.menuViewProduct->{
                 startActivity(Intent(this@ViewOrder,View_Product::class.java))
+                return true
+            }
+            R.id.menuConformOrders->{
+                startActivity(Intent(this@ViewOrder,Conform_Orders::class.java))
+                return true
+            }
+            R.id.menuCancelledOrders->{
+                startActivity(Intent(this@ViewOrder,Cancelled_Order::class.java))
                 return true
             }
             R.id.menuQuery->{
