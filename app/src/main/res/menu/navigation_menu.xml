@@ -20,6 +20,11 @@
         android:title="Wishlist"
         android:icon="@drawable/ic_heart"
         />
+    <item
+        android:id="@+id/nav_customOrder"
+        android:title="Custom Order"
+        android:icon="@drawable/ic_custom_order"
+        />
 
 
 </menu>
