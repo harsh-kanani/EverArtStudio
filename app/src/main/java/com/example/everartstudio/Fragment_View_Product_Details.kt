@@ -1,13 +1,17 @@
 package com.example.everartstudio
 
 import android.app.Activity
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.core.view.isVisible
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -18,6 +22,8 @@ import com.like.LikeButton
 import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.fragment__view__product__details.*
 import kotlinx.android.synthetic.main.view_product_custom_user.txtProductName
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -51,6 +57,7 @@ class Fragment_View_Product_Details : Fragment() {
         return inflater.inflate(R.layout.fragment__view__product__details, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -190,8 +197,60 @@ class Fragment_View_Product_Details : Fragment() {
 
             }
         })
+        btncomment.setOnClickListener {
+            var myRef4 = database.getReference("Users").child(user.toString())
+            var myRef5 = database.getReference("Comments").child(product.toString()).push()
+            val currentDateTime = LocalDateTime.now()
+            var cd=currentDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+            myRef4.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
 
+                    val nm =dataSnapshot.child("name").value.toString()
+                    var comments = ProductCommntsDataClass(user.toString(),nm,product.toString(),txtComment.text.toString(),cd.toString())
+                    myRef5.setValue(comments).addOnSuccessListener {
+                        Toast.makeText(context,"Comment Added Successfully !!",Toast.LENGTH_LONG).show()
+                        txtComment.text.clear()
+                    }.addOnFailureListener {
+                        Toast.makeText(context,"Something Wrong !!",Toast.LENGTH_LONG).show()
+                        txtComment.text.clear()
+                    }
+                    //Log.d(TAG, "Value is: $value")
+                }
 
+                override fun onCancelled(error: DatabaseError) {
+                    // Failed to read value
+                    //Log.w(TAG, "Failed to read value.", error.toException())
+                }
+            })
+        }
+        var myRef5 = database.getReference("Comments").child(product.toString())
+        var cmntlst:ArrayList<ProductCommntsDataClass> = arrayListOf()
+        myRef5.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                cmntlst.clear()
+                for (i in dataSnapshot.children){
+                    val value =i.getValue(ProductCommntsDataClass::class.java)!!
+                    if(value != null){
+                        
+                        cmntlst.add(value)
+                    }
+                }
+                cmntlst.reverse()
+                var adapter = ProductCommentMainClass(context!!,cmntlst)
+                rcv_comments.adapter =adapter
+                rcv_comments.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+
+                //Log.d(TAG, "Value is: $value")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                //Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
 
 
     }

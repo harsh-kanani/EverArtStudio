@@ -95,7 +95,7 @@ class Fragment_Payment : Fragment() {
                             fragmentTransaction.addToBackStack(null)
                             fragmentTransaction.commit()
                         }.addOnFailureListener {
-                            Toast.makeText(context,"Something Wronng !!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context,"Something Wrong !!", Toast.LENGTH_LONG).show()
                         }
 
                         //var myRef1=database.getReference().child("check").push()
