@@ -38,15 +38,24 @@ class Login : AppCompatActivity() {
                             // Sign in success, update UI with the signed-in user's information
 
                             val user = mAuth!!.currentUser
-                            var sp=getSharedPreferences("MySp",Activity.MODE_PRIVATE)
-                            var edt=sp.edit()
-                            edt.putString("uid","${user!!.uid}")
-                            edt.apply()
-                            edt.commit()
-                            Toast.makeText(this@Login,"Successfully Login",Toast.LENGTH_LONG).show()
-                            //Toast.makeText(this@Login,user!!.uid,Toast.LENGTH_LONG).show()
-                            startActivity(Intent(this@Login,User_Home_Screen::class.java))
-                            finish()
+                            if(user!!.isEmailVerified) {
+                                var sp = getSharedPreferences("MySp", Activity.MODE_PRIVATE)
+                                var edt = sp.edit()
+                                edt.putString("uid", "${user!!.uid}")
+                                edt.apply()
+                                edt.commit()
+                                Toast.makeText(this@Login, "Successfully Login", Toast.LENGTH_LONG)
+                                    .show()
+                                //Toast.makeText(this@Login,user!!.uid,Toast.LENGTH_LONG).show()
+                                startActivity(Intent(this@Login, User_Home_Screen::class.java))
+                                finish()
+                            }
+                            else{
+                                Toast.makeText(this@Login,"Your Email Is Not Verified.",Toast.LENGTH_LONG).show()
+                                user!!.sendEmailVerification().addOnCompleteListener {
+                                    Toast.makeText(this@Login,"Verification Link Is sended To Your Email ...",Toast.LENGTH_LONG).show()
+                                }
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
 

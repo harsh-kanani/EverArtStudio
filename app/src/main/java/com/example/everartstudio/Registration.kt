@@ -36,6 +36,9 @@ class Registration : AppCompatActivity() {
                             // Sign in success, update UI with the signed-in user's information
 
                             val user = mAuth!!.currentUser
+                            user!!.sendEmailVerification().addOnCompleteListener {
+                                Toast.makeText(this@Registration,"Verification Email Sended To Your Mail !!",Toast.LENGTH_LONG).show()
+                            }
                             var userdata=UserDataClass(user!!.uid,txtunm.text.toString(),txtmail.text.toString(),txtpwd.text.toString(),txtmono.text.toString())
                             myRef.child(userdata.uid).setValue(userdata).addOnCompleteListener {
                                 Toast.makeText(this@Registration,"Successfully Register",Toast.LENGTH_LONG).show()
