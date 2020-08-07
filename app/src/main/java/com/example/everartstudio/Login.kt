@@ -15,7 +15,16 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        var gsp= getSharedPreferences("MySp",Activity.MODE_PRIVATE)
+        var u = gsp.getString("uid","null")
+        if(u != ""){
+            startActivity(Intent(this@Login,User_Home_Screen::class.java))
+            finish()
+        }
+
         mAuth = FirebaseAuth.getInstance()
+
+
 
         lblrg.setOnClickListener {
             startActivity(Intent(this@Login, Registration::class.java))

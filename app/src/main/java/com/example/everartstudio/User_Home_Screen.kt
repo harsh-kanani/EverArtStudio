@@ -1,6 +1,7 @@
 package com.example.everartstudio
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -91,6 +93,20 @@ class User_Home_Screen : AppCompatActivity(),
 
 
     }
+    private fun logout(){
+        var mAuth: FirebaseAuth? = null
+        mAuth = FirebaseAuth.getInstance()
+        mAuth!!.signOut()
+
+
+        var sp = getSharedPreferences("MySp",Activity.MODE_PRIVATE)
+        var edt = sp.edit()
+        edt.putString("uid","")
+        edt.apply()
+        edt.commit()
+        startActivity(Intent(this@User_Home_Screen,Login::class.java))
+        finish()
+    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
@@ -105,6 +121,13 @@ class User_Home_Screen : AppCompatActivity(),
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container,Fragment_Wishlist()).commit()
             R.id.nav_customOrder->
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container,Fragment_Custom_Order()).commit()
+            R.id.nav_gallary->
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,Fragment_Gallary()).commit()
+            R.id.nav_contactUs->
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,Fragment_ContactUs()).commit()
+            R.id.nav_logout ->
+                logout()
+
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
