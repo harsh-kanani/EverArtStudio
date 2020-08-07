@@ -27,39 +27,62 @@ class Registration : AppCompatActivity() {
             finish()
         }
         btnreg.setOnClickListener {
-            if(txtpwd.text.toString().equals(txtcpwd.text.toString())){
-                mAuth!!.createUserWithEmailAndPassword(txtmail.text.toString(), txtpwd.text.toString())
-                    .addOnCompleteListener(
-                        this
-                    ) { task ->
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
+            if(txtmail.text.toString() == "" || txtpwd.text.toString() == "" || txtcpwd.text.toString()=="" || txtmono.text.toString() == "" || txtunm.text.toString() == ""){
+                Toast.makeText(this@Registration,"Blank Input Is Not Allow !!",Toast.LENGTH_LONG).show()
 
-                            val user = mAuth!!.currentUser
-                            user!!.sendEmailVerification().addOnCompleteListener {
-                                Toast.makeText(this@Registration,"Verification Email Sended To Your Mail !!",Toast.LENGTH_LONG).show()
-                            }
-                            var userdata=UserDataClass(user!!.uid,txtunm.text.toString(),txtmail.text.toString(),txtpwd.text.toString(),txtmono.text.toString())
-                            myRef.child(userdata.uid).setValue(userdata).addOnCompleteListener {
-                                Toast.makeText(this@Registration,"Successfully Register",Toast.LENGTH_LONG).show()
-                                startActivity(Intent(this@Registration,Login::class.java))
-                                finish()
-                            }
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-
-                            Toast.makeText(
-                                this@Registration, "Authentication failed.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-
-                        }
-
-                        // ...
-                    }
             }else{
-                Toast.makeText(this@Registration,"Password is not match",Toast.LENGTH_LONG).show()
+                if (txtpwd.text.toString().equals(txtcpwd.text.toString())) {
+                    mAuth!!.createUserWithEmailAndPassword(
+                        txtmail.text.toString(),
+                        txtpwd.text.toString()
+                    )
+                        .addOnCompleteListener(
+                            this
+                        ) { task ->
+                            if (task.isSuccessful) {
+                                // Sign in success, update UI with the signed-in user's information
+
+                                val user = mAuth!!.currentUser
+                                user!!.sendEmailVerification().addOnCompleteListener {
+                                    Toast.makeText(
+                                        this@Registration,
+                                        "Verification Email Sended To Your Mail !!",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                                var userdata = UserDataClass(
+                                    user!!.uid,
+                                    txtunm.text.toString(),
+                                    txtmail.text.toString(),
+                                    txtpwd.text.toString(),
+                                    txtmono.text.toString()
+                                )
+                                myRef.child(userdata.uid).setValue(userdata).addOnCompleteListener {
+                                    Toast.makeText(
+                                        this@Registration,
+                                        "Successfully Register",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    startActivity(Intent(this@Registration, Login::class.java))
+                                    finish()
+                                }
+
+                            } else {
+                                // If sign in fails, display a message to the user.
+
+                                Toast.makeText(
+                                    this@Registration, "Authentication failed.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            }
+
+                            // ...
+                        }
+                } else {
+                    Toast.makeText(this@Registration, "Password is not match", Toast.LENGTH_LONG)
+                        .show()
+                }
             }
         }
     }

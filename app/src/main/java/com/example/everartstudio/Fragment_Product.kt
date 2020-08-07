@@ -9,6 +9,7 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -96,7 +97,8 @@ class Fragment_Product : Fragment() {
 
                     var adapter = UserViewProductMainClass(context!!,display)
                     rcvProduct.adapter =adapter
-                    rcvProduct.layoutManager = GridLayoutManager(context,2)
+                    rcvProduct.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+                    //rcvProduct.layoutManager = GridLayoutManager(context,2)
                     srvwProduct.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
                         override fun onQueryTextSubmit(query: String?): Boolean {
                             return true

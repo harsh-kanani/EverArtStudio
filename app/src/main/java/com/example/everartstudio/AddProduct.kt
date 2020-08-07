@@ -72,8 +72,11 @@ class AddProduct : AppCompatActivity() {
                 }
 
             btnadd.setOnClickListener {
+                if(txtdetail.text.toString() == "" || txtpnm.text.toString() == "" || txtprice.text.toString() == ""){
+                    Toast.makeText(this@AddProduct,"Blank Input Is Not Allow !!",Toast.LENGTH_LONG).show()
+                }else {
                     uploadImage()
-
+                }
                     //Toast.makeText(this,"hel",Toast.LENGTH_LONG).show()
                 }
 
