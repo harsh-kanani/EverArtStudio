@@ -1,24 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="176dp"
     android:background="#F44336"
 
     >
-
-    <TextView
-        android:id="@+id/nav_top_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Navigation Drawer"
-        android:layout_weight="1"
-        android:textSize="24dp"
-        android:textColor="#F9FAFA"
+        android:orientation="horizontal"
         android:gravity="center"
+        android:layout_weight="1"
 
-        />
+        >
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="70dp"
+
+            >
+            <ImageView
+                android:id="@+id/img_profile"
+                android:layout_width="75dp"
+
+                android:layout_height="75dp"
+                android:layout_marginLeft="5dp"
+                android:background="#F44336"
+
+                tools:srcCompat="@drawable/ic_profile2" />
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/nav_top_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+
+            android:layout_weight="1"
+            android:text="Navigation Drawer"
+            android:textColor="#F9FAFA"
+
+
+            android:textSize="24dp" />
+    </LinearLayout>
+
+
 
 
 </LinearLayout>

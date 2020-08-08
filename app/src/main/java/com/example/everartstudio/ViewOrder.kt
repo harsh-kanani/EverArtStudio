@@ -93,6 +93,7 @@ class ViewOrder : AppCompatActivity() {
             }
             R.id.menuLogout->{
                 startActivity(Intent(this@ViewOrder,Login::class.java))
+                finish()
                 return true
             }
             else->super.onOptionsItemSelected(item)

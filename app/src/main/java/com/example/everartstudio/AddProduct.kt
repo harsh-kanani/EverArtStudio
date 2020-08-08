@@ -25,9 +25,9 @@ class AddProduct : AppCompatActivity() {
         private var filePath: Uri? = null
         private var firebaseStore: FirebaseStorage? = null
         private var storageReference: StorageReference? = null
-        private var d:ByteArray?=null
-        private var username:String?=null
-        private var flg:String="false"
+        //private var d:ByteArray?=null
+        //private var username:String?=null
+        //private var flg:String="false"
         override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
             super.onActivityResult(requestCode, resultCode, data)
             if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
