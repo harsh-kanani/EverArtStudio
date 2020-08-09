@@ -167,7 +167,7 @@ class User_Home_Screen : AppCompatActivity(),
 
         var sp = getSharedPreferences("MySp",Activity.MODE_PRIVATE)
         var edt = sp.edit()
-        edt.putString("uid","")
+        edt.putString("uid","null")
         edt.apply()
         edt.commit()
         startActivity(Intent(this@User_Home_Screen,Login::class.java))
