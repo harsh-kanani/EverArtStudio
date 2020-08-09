@@ -17,13 +17,13 @@ class Login : AppCompatActivity() {
 
         var gsp= getSharedPreferences("MySp",Activity.MODE_PRIVATE)
         var u = gsp.getString("uid","null")
-        if(u != ""){
+
+        if(u!="null"){
             startActivity(Intent(this@Login,User_Home_Screen::class.java))
             finish()
         }
 
         mAuth = FirebaseAuth.getInstance()
-
 
 
         lblrg.setOnClickListener {
