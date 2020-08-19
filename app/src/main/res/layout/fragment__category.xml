@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     tools:context=".Fragment_Category">
 
     <TextView
@@ -11,8 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
+        android:fontFamily="@font/anton"
         android:text="Category"
-        android:textColor="#D61C1C"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,71 +37,163 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
+                app:cardElevation="2.5dp"
+                app:cardBackgroundColor="@color/shadow"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="43dp">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animationView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="50dp"
+                    app:lottie_rawRes="@raw/h3"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"/>
 
                 <Button
                     android:id="@+id/btnViewAll"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/colorAccent"
                     android:layout_gravity="center"
-                    android:text="All Items" />
+                    android:text="All Items"
+                    app:cornerRadius="40dp"></Button>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView1"
+                app:cardElevation="2.5dp"
+                android:layout_marginTop="25dp"
+                app:cardBackgroundColor="@color/shadow"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="43dp">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animationView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="50dp"
+                    app:lottie_rawRes="@raw/h2"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"/>
 
                 <Button
                     android:id="@+id/btnDrawing"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/colorAccent"
                     android:layout_gravity="center"
                     android:text="Drawing" />
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
+                app:cardElevation="2.5dp"
+                android:layout_marginTop="25dp"
+                app:cardBackgroundColor="@color/shadow"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="43dp">
 
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animationView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="50dp"
+                    app:lottie_rawRes="@raw/h4"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"/>
                 <Button
                     android:id="@+id/btnHandiCraft"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/colorAccent"
                     android:layout_gravity="center"
                     android:text="HandiCraft" />
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView3"
+                app:cardElevation="2.5dp"
+                android:layout_marginTop="25dp"
+                app:cardBackgroundColor="@color/shadow"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="43dp">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animationView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="50dp"
+                    app:lottie_rawRes="@raw/h5"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"/>
 
                 <Button
                     android:id="@+id/btnPaintings"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/colorAccent"
                     android:layout_gravity="center"
                     android:text="Paintings" />
+
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardView4"
+                android:id="@+id/cardView5"
+                app:cardElevation="2.5dp"
+                android:layout_marginTop="25dp"
+                app:cardBackgroundColor="@color/shadow"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="43dp">
 
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animationView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="50dp"
+                    app:lottie_rawRes="@raw/h1"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"/>
                 <Button
                     android:id="@+id/btnPoster"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/colorAccent"
                     android:layout_gravity="center"
                     android:text="Posters" />
             </androidx.cardview.widget.CardView>

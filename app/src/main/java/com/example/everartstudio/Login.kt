@@ -38,14 +38,14 @@ class Login : AppCompatActivity() {
             if (txtemail.text.toString() == "" || txtpassword.text.toString() == "") {
                 Toast.makeText(this@Login, "Blank Input Is Not Allow !!", Toast.LENGTH_LONG).show()
             } else {
-                if (txtemail.toString()
+                if (txtemail.text.toString()
                         .equals("admin@gmail.com") && txtpassword.text.toString().equals("admin123")
                 ) {
                     startActivity(Intent(this@Login, ViewOrder::class.java))
                     finish()
                 } else {
                     mAuth!!.signInWithEmailAndPassword(
-                        txtemail.toString(),
+                        txtemail.text.toString(),
                         txtpassword.text.toString()
                     )
                         .addOnCompleteListener(
