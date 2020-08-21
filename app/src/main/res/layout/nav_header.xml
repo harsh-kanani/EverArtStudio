@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="176dp"
-    android:background="#F44336"
+    android:background="@color/colorPrimaryDark"
 
     >
     <LinearLayout
@@ -21,8 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardCornerRadius="70dp"
-            android:layout_marginLeft="5dp"
-            >
+            android:layout_marginLeft="5dp">
             <ImageView
                 android:id="@+id/img_profile"
                 android:layout_width="75dp"
